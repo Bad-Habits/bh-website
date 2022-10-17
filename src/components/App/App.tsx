@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "../Home/Home";
 import Nav from "../Nav/Nav";
-import { AppStyles } from "./App.styles";
+import { GlobalStyle } from "./globalStyles";
 
 function App() {
   return (
     <>
-      <AppStyles />
+      <GlobalStyle />
       <Routes>
         <Route path="/" element={<Nav />}>
           <Route index element={<Home />} />

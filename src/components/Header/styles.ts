@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ReactComponent as bhLogo } from "../../assets/bhLogo.svg";
 import { mobileWidth } from "../../utils/constants";
 
-export const NavContainer = styled.div`
+export const HeaderContainer = styled.header`
   height: 70px;
   width: 100%;
   display: flex;
@@ -28,7 +28,7 @@ export const BhIcon = styled(bhLogo)`
   }
 `;
 
-export const NavLinks = styled.div`
+export const NavLinks = styled.nav`
   width: 50%;
   height: 100%;
   display: flex;

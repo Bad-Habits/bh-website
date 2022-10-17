@@ -1,16 +1,16 @@
 import { Outlet } from "react-router-dom";
 import {
-  NavContainer,
+  HeaderContainer,
   NavLink,
   BhIcon,
   LogoContainer,
   NavLinks,
-} from "./Nav.styles";
+} from "./styles";
 
 const Nav = () => {
   return (
     <>
-      <NavContainer>
+      <HeaderContainer>
         <LogoContainer to="/">
           <BhIcon />
         </LogoContainer>
@@ -18,8 +18,9 @@ const Nav = () => {
           <NavLink to="contact-us">Contact Us</NavLink>
           <NavLink to="tickets">Tickets</NavLink>
           <NavLink to="merch">Merch</NavLink>
+          <NavLink to="sign-in">Sign In</NavLink>
         </NavLinks>
-      </NavContainer>
+      </HeaderContainer>
       <Outlet />
     </>
   );

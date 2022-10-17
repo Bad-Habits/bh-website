@@ -3,7 +3,7 @@ import { mobileWidth } from "../../utils/constants";
 
 export const GlobalStyle = createGlobalStyle`
   body {
-    padding: 40px;
+    padding: 20px 40px;
     font-family: "Open Sans Condensed", sans-serif;
 
     @media screen and (max-width: ${mobileWidth}) {

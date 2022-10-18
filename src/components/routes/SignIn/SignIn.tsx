@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
-import { SignInContainer } from "./styles";
+import { AuthContainer } from "./styles";
 
 const SignIn = () => {
   const [hasAccount, setHasAccount] = useState(true);
@@ -9,13 +9,13 @@ const SignIn = () => {
   const handleFormChange = () => setHasAccount((prev) => !prev);
 
   return (
-    <SignInContainer>
+    <AuthContainer>
       {hasAccount ? (
         <SignInForm handleFormChange={handleFormChange} />
       ) : (
         <SignUpForm handleFormChange={handleFormChange} />
       )}
-    </SignInContainer>
+    </AuthContainer>
   );
 };
 

@@ -3,11 +3,12 @@ import Button from "../../Button/Button";
 import GoogleButton from "react-google-button";
 import FormInput from "../../FormInput/FormInput";
 import {
-  SignInFormContainer,
+  AuthFormContainer,
+  Form,
   ButtonsContainer,
   ChangeFormLink,
 } from "./styles";
-import { signInWithGooglePopup } from "../../../utils/firebase";
+import { createUserDoc, signInWithGooglePopup } from "../../../utils/firebase";
 
 const formFields: ("email" | "password")[] = ["email", "password"];
 
@@ -21,13 +22,14 @@ const SignInForm: FC<SignInFormProps> = ({ handleFormChange }) => {
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    console.log("regular sign in");
+    console.log("regular sign in needs implementing");
   };
 
   const handleGoogleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const res = await signInWithGooglePopup();
-    console.log({ res });
+    const { user } = await signInWithGooglePopup();
+    const userDocRef = await createUserDoc(user);
+    console.log(userDocRef);
   };
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
@@ -52,9 +54,9 @@ const SignInForm: FC<SignInFormProps> = ({ handleFormChange }) => {
   });
 
   return (
-    <SignInFormContainer>
+    <AuthFormContainer>
       <h2>Sign In</h2>
-      <form>
+      <Form>
         {formInputs}
         <ButtonsContainer>
           <Button buttonType="inverted" buttonProps={{ onClick: handleSignIn }}>
@@ -62,11 +64,11 @@ const SignInForm: FC<SignInFormProps> = ({ handleFormChange }) => {
           </Button>
           <GoogleButton onClick={handleGoogleSignIn} />
         </ButtonsContainer>
-      </form>
+      </Form>
       <ChangeFormLink onClick={handleFormChange}>
         Don't have an account?
       </ChangeFormLink>
-    </SignInFormContainer>
+    </AuthFormContainer>
   );
 };
 

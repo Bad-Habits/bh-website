@@ -20,11 +20,11 @@ export const HeaderContainer = styled.header`
 export const LogoContainer = styled(Link)``;
 
 export const BhIcon = styled(bhLogo)`
-  height: 100%;
-  width: 70px;
+  height: 80px;
+  width: 80px;
 
   @media screen and (max-width: ${mobileWidth}) {
-    width: 50px;
+    width: 60px;
   }
 `;
 

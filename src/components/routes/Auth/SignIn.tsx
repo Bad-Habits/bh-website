@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from "../../Button/Button";
 import GoogleButton from "react-google-button";
-import FormInput from "../../FormInput/FormInput";
 import {
   AuthFormContainer,
   Form,
@@ -15,13 +14,15 @@ import {
 } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { formInputGenerator } from "./functions";
+import { useAppDispatch } from "../../../redux/store/hooks";
+import { setUser } from "../../../redux/features/authSlice";
 
 const formFields: ("email" | "password")[] = ["email", "password"];
 
 const SignIn = () => {
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSignIn = async (e: { preventDefault: () => void }) => {
@@ -32,7 +33,7 @@ const SignIn = () => {
 
     try {
       const { user } = await signInUserWithEmailAndPassword(email, password);
-      console.log(user);
+      dispatch(setUser(user.uid));
       navigate("/");
     } catch (err: any) {
       switch (err.code) {

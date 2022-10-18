@@ -1,29 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 
-type CountType = {
-  count: number;
-  diff: number;
-};
+type UserType = string | void;
+type UserStateType = { user: UserType };
 
-const initialState: CountType = { count: 0, diff: 1 };
+const initialState: UserStateType = { user: undefined };
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
-    setDiff: (state, action: PayloadAction<number>) => {
-      state.diff = action.payload;
-    },
-    inc: (state) => {
-      state.count += state.diff;
-    },
-    dec: (state) => {
-      state.count -= state.diff;
+    setUser: (state: UserStateType, { payload }) => {
+      console.log("setting user state to", payload);
+      state.user = payload;
     },
   },
 });
 
-export const { setDiff, inc, dec } = counterSlice.actions;
+export const { setUser } = authSlice.actions;
 
-export default counterSlice.reducer;
+export default authSlice.reducer;

@@ -9,7 +9,7 @@ export const AuthFormContainer = styled.div`
   margin: auto;
   padding: 10px;
   border: 2px solid grey;
-  border-radius: 10px;
+  border-radius: 5px;
 `;
 
 export const Form = styled.form`

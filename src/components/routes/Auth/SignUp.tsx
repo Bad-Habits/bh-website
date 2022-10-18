@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Button from "../../Button/Button";
-import FormInput from "../../FormInput/FormInput";
 import {
   AuthFormContainer,
   ChangeFormLink,
@@ -13,6 +12,8 @@ import {
 } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { formInputGenerator } from "./functions";
+import { useAppDispatch } from "../../../redux/store/hooks";
+import { setUser } from "../../../redux/features/authSlice";
 
 const formFields: (
   | "firstName"
@@ -40,7 +41,7 @@ const SignUp = () => {
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const signUpHandler = async (e: { preventDefault: () => void }) => {
@@ -66,7 +67,7 @@ const SignUp = () => {
     try {
       const { user } = await createNewUserWithEmailAndPassword(email, password);
       await createUserDoc(user, { displayName, phoneNumber });
-      console.log("need to add user to auth reducer");
+      dispatch(setUser(user.uid));
       navigate("/");
     } catch (err: any) {
       switch (err.code) {

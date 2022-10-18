@@ -36,3 +36,25 @@ export const InvertedButton = styled(BaseButton)`
     border: none;
   }
 `;
+
+export const SpinnerContainer = styled.span`
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  align-self: center;
+  border: 3px solid rgba(195, 195, 195, 0.6);
+  border-radius: 50%;
+  border-top-color: #636;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+  @keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+`;

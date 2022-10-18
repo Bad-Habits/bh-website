@@ -1,8 +1,5 @@
 import styled from "styled-components";
-
-export const AuthContainer = styled.div`
-  height: 80vh;
-`;
+import { Link } from "react-router-dom";
 
 export const AuthFormContainer = styled.div`
   display: flex;
@@ -26,7 +23,7 @@ export const ButtonsContainer = styled.div`
   gap: 15px;
 `;
 
-export const ChangeFormLink = styled.span`
+export const ChangeFormLink = styled(Link)`
   margin: 30px 0;
   color: blue;
   cursor: pointer;

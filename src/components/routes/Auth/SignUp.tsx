@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import Button from "../../Button/Button";
 import FormInput from "../../FormInput/FormInput";
 import {
@@ -12,6 +12,7 @@ import {
   createUserDoc,
 } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { formInputGenerator } from "./functions";
 
 const formFields: (
   | "firstName"
@@ -29,11 +30,7 @@ const formFields: (
   "confirmPassword",
 ];
 
-type SignUpFormProps = {
-  handleFormChange: () => void;
-};
-
-const SignUpForm: FC<SignUpFormProps> = ({ handleFormChange }) => {
+const SignUp = () => {
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
@@ -42,10 +39,14 @@ const SignUpForm: FC<SignUpFormProps> = ({ handleFormChange }) => {
     password: "",
     confirmPassword: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const signUpHandler = async () => {
+  const signUpHandler = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setIsLoading(true);
+
     const {
       firstName,
       lastName,
@@ -64,7 +65,9 @@ const SignUpForm: FC<SignUpFormProps> = ({ handleFormChange }) => {
 
     try {
       const { user } = await createNewUserWithEmailAndPassword(email, password);
-      await createUserDoc(user, { displayName });
+      await createUserDoc(user, { displayName, phoneNumber });
+      console.log("need to add user to auth reducer");
+      navigate("/");
     } catch (err: any) {
       switch (err.code) {
         case "auth/email-already-in-use":
@@ -76,9 +79,9 @@ const SignUpForm: FC<SignUpFormProps> = ({ handleFormChange }) => {
             err
           );
       }
-    }
 
-    navigate("/");
+      setIsLoading(true);
+    }
   };
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
@@ -86,27 +89,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ handleFormChange }) => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const formInputs = formFields.map((field) => {
-    return (
-      <FormInput
-        key={field}
-        label={
-          field[0].toUpperCase() +
-          field
-            .slice(1)
-            .split(/(?=[A-Z])/)
-            .join(" ")
-        }
-        inputProps={{
-          type: field,
-          required: true,
-          onChange: handleChange,
-          name: field,
-          value: formValues[field],
-        }}
-      />
-    );
-  });
+  const formInputs = formInputGenerator(formFields, formValues, handleChange);
 
   return (
     <AuthFormContainer>
@@ -114,14 +97,14 @@ const SignUpForm: FC<SignUpFormProps> = ({ handleFormChange }) => {
       <Form onSubmit={signUpHandler}>
         {formInputs}
         <ButtonsContainer>
-          <Button buttonType="inverted">Sign Up</Button>
+          <Button buttonType="inverted" isLoading={isLoading}>
+            Sign Up
+          </Button>
         </ButtonsContainer>
       </Form>
-      <ChangeFormLink onClick={handleFormChange}>
-        Already have an account?
-      </ChangeFormLink>
+      <ChangeFormLink to="../sign-in">Already have an account?</ChangeFormLink>
     </AuthFormContainer>
   );
 };
 
-export default SignUpForm;
+export default SignUp;

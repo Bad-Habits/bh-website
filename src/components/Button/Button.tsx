@@ -1,14 +1,16 @@
 import { ButtonHTMLAttributes, FC, PropsWithChildren } from "react";
-import { BaseButton, InvertedButton } from "./styles";
+import { BaseButton, InvertedButton, SpinnerContainer } from "./styles";
 
 interface ButtonProps extends PropsWithChildren {
   buttonType?: "base" | "inverted";
+  isLoading?: boolean;
   buttonProps?: ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
 const Button: FC<ButtonProps> = ({
   children,
   buttonType = "base",
+  isLoading = false,
   buttonProps,
 }) => {
   const CustomButton = {
@@ -16,7 +18,11 @@ const Button: FC<ButtonProps> = ({
     inverted: InvertedButton,
   }[buttonType];
 
-  return <CustomButton {...buttonProps}>{children}</CustomButton>;
+  return (
+    <CustomButton {...buttonProps}>
+      {isLoading ? <SpinnerContainer /> : children}
+    </CustomButton>
+  );
 };
 
 export default Button;

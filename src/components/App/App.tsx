@@ -5,9 +5,32 @@ import Home from "../routes/Home/Home";
 import Merch from "../routes/Merch/Merch";
 import Header from "../Header/Header";
 import Tickets from "../routes/Tickets/Tickets";
-import SignIn from "../routes/SignIn/SignIn";
+
+import SignIn from "../routes/Auth/SignIn";
+import SignUp from "../routes/Auth/SignUp";
+import { useEffect } from "react";
+import {
+  createUserDoc,
+  onAuthStateChangedListener,
+} from "../../utils/firebase";
+import { useAppDispatch } from "../../redux/store/hooks";
+import { setUser } from "../../redux/features/authSlice";
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      console.log("auth state changed:", user);
+      if (user) {
+        createUserDoc(user);
+      }
+      dispatch(setUser(user?.uid));
+    });
+
+    return unsubscribe;
+  }, [dispatch]);
+
   return (
     <>
       <GlobalStyle />
@@ -18,6 +41,7 @@ const App = () => {
           <Route path="tickets" element={<Tickets />} />
           <Route path="merch" element={<Merch />} />
           <Route path="sign-in" element={<SignIn />} />
+          <Route path="sign-up" element={<SignUp />} />
         </Route>
       </Routes>
     </>

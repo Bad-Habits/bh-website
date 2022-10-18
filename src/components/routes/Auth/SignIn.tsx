@@ -14,20 +14,21 @@ import {
 } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { formInputGenerator } from "./functions";
-import { useAppDispatch } from "../../../redux/store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { setUser } from "../../../redux/features/authSlice";
+import { setIsLoading } from "../../../redux/features/isLoading";
 
 const formFields: ("email" | "password")[] = ["email", "password"];
 
 const SignIn = () => {
   const [formValues, setFormValues] = useState({ email: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useAppSelector((state) => state.isLoading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
 
     const { email, password } = formValues;
 
@@ -48,12 +49,12 @@ const SignIn = () => {
       }
     }
 
-    setIsLoading(false);
+    dispatch(setIsLoading(false));
   };
 
   const handleGoogleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
 
     try {
       const { user } = await signInWithGooglePopup();
@@ -66,7 +67,7 @@ const SignIn = () => {
       }
     }
 
-    setIsLoading(false);
+    dispatch(setIsLoading(false));
   };
 
   const handleChange = (e: { target: { name: any; value: any } }) => {

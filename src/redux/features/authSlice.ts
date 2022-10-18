@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type UserType = string | void;
-type UserStateType = { user: UserType };
+type UserStateType = { userDoc: UserType };
 
-const initialState: UserStateType = { user: undefined };
+const initialState: UserStateType = { userDoc: undefined };
 
 export const authSlice = createSlice({
   name: "auth",
@@ -11,7 +11,7 @@ export const authSlice = createSlice({
   reducers: {
     setUser: (state: UserStateType, { payload }) => {
       console.log("setting user state to", payload);
-      state.user = payload;
+      state.userDoc = payload;
     },
   },
 });

@@ -15,17 +15,19 @@ import {
 } from "../../utils/firebase";
 import { useAppDispatch } from "../../redux/store/hooks";
 import { setUser } from "../../redux/features/authSlice";
+import { DocumentData, DocumentReference } from "firebase/firestore";
 
 const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
+    const unsubscribe = onAuthStateChangedListener(async (user) => {
       console.log("auth state changed:", user);
+      let userDoc: DocumentReference<DocumentData> | undefined;
       if (user) {
-        createUserDoc(user);
+        userDoc = await createUserDoc(user);
       }
-      dispatch(setUser(user?.uid));
+      dispatch(setUser(userDoc));
     });
 
     return unsubscribe;

@@ -19,7 +19,7 @@ const Button: FC<ButtonProps> = ({
   }[buttonType];
 
   return (
-    <CustomButton {...buttonProps}>
+    <CustomButton {...buttonProps} disabled={isLoading}>
       {isLoading ? <SpinnerContainer /> : children}
     </CustomButton>
   );

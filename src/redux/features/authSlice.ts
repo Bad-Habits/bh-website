@@ -1,21 +1,50 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { UserInfo } from "firebase/auth";
+import { DocumentData } from "firebase/firestore";
+import { getUser } from "../../utils/firebase";
 
-type UserType = string | void;
-type UserStateType = { userDoc: UserType };
+// type UserSchema = {
+//   displayName: string;
+//   email: string;
+//   phoneNumber: string;
+//   createdAt: Date;
+//   isAdmin: boolean;
+// };
+type UserType = DocumentData | null;
+type UserStateType = { user: UserType };
 
-const initialState: UserStateType = { userDoc: undefined };
+const initialState: UserStateType = { user: null };
+
+export const setUserThunk = createAsyncThunk(
+  "auth/setUser",
+  async (userAuth: UserInfo | null) => {
+    if (!userAuth) return null;
+
+    try {
+      const userDoc = await getUser(userAuth);
+      if (!userDoc) return null;
+
+      const user = userDoc.data();
+      return user || null;
+    } catch (err) {
+      console.error("Error in setUserThunk:", err);
+      return null;
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    setUser: (state: UserStateType, { payload }) => {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(setUserThunk.fulfilled, (state, { payload }) => {
       console.log("setting user state to", payload);
-      state.userDoc = payload;
-    },
+      state.user = payload;
+    });
   },
 });
 
-export const { setUser } = authSlice.actions;
+// export const { } = authSlice.actions;
 
 export default authSlice.reducer;

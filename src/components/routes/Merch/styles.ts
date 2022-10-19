@@ -8,8 +8,8 @@ export const CategoryContainer = styled.div`
   row-gap: 50px;
 `;
 
-export const Title = styled.h2`
-  font-size: 38px;
+export const Title = styled.h3`
+  font-size: 20px;
   margin-bottom: 25px;
   text-align: center;
 `;
@@ -19,7 +19,7 @@ export const MerchCardContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 350px;
+  height: 150px;
   align-items: center;
   position: relative;
 

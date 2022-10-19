@@ -14,7 +14,9 @@ import {
   onAuthStateChangedListener,
 } from "../../utils/firebase";
 import { useAppDispatch } from "../../redux/store/hooks";
-import { setUser } from "../../redux/features/authSlice";
+import { setUserThunk } from "../../redux/features/authSlice";
+import SignOut from "../routes/Auth/SignOut";
+import Checkout from "../routes/Checkout/Checkout";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -26,10 +28,11 @@ const App = () => {
       if (user) {
         try {
           await createUserDoc(user);
+          dispatch(setUserThunk(user));
         } catch (err) {
           console.error(err);
         }
-      } else dispatch(setUser(user));
+      } else dispatch(setUserThunk(null));
     });
 
     return unsubscribe;
@@ -46,6 +49,8 @@ const App = () => {
           <Route path="merch" element={<Merch />} />
           <Route path="sign-in" element={<SignIn />} />
           <Route path="sign-up" element={<SignUp />} />
+          <Route path="sign-out" element={<SignOut />} />
+          <Route path="checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </>

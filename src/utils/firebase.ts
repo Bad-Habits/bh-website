@@ -18,11 +18,10 @@ import {
   getDoc,
   setDoc,
   collection,
-  writeBatch,
   query,
   getDocs,
 } from "firebase/firestore";
-import { MerchDataType } from "./types";
+
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -51,27 +50,38 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 
 export const db = getFirestore();
 
-export const addDocsToCollection = async (
-  collectionKey: string,
-  docsToAdd: MerchDataType
-) => {
-  const collectionRef = collection(db, collectionKey);
-  const batch = writeBatch(db);
+// export const addDocsToCollection = async (
+//   collectionKey: string,
+//   docsToAdd: MerchDataType
+// ) => {
+//   const collectionRef = collection(db, collectionKey);
+//   const batch = writeBatch(db);
 
-  if (Array.isArray(docsToAdd)) {
-    for (const curDoc of docsToAdd) {
-      const docRef = doc(collectionRef);
-      batch.set(docRef, curDoc);
-    }
-  } else {
-    for (const curDoc in docsToAdd) {
-      const docRef = doc(collectionRef, curDoc);
-      batch.set(docRef, docsToAdd[curDoc]);
-    }
+//   if (Array.isArray(docsToAdd)) {
+//     for (const curDoc of docsToAdd) {
+//       const docRef = doc(collectionRef);
+//       batch.set(docRef, curDoc);
+//     }
+//   } else {
+//     for (const curDoc in docsToAdd) {
+//       const docRef = doc(collectionRef, curDoc);
+//       batch.set(docRef, docsToAdd[curDoc]);
+//     }
+//   }
+
+//   await batch.commit();
+//   console.log("batch commited to:", collectionKey);
+// };
+
+export const getUser = async (user: UserInfo) => {
+  try {
+    const userDocRef = doc(db, `users/${user.uid}`);
+    const userSnapshot = await getDoc(userDocRef);
+
+    return userSnapshot;
+  } catch (err) {
+    console.error(err);
   }
-
-  await batch.commit();
-  console.log("batch commited to:", collectionKey);
 };
 
 export const getCategoriesAndDocuments = async () => {

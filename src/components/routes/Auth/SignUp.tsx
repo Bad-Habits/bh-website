@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { formInputGenerator } from "./functions";
 import { useAppDispatch } from "../../../redux/store/hooks";
-import { setUser } from "../../../redux/features/authSlice";
+import { setUserThunk } from "../../../redux/features/authSlice";
 
 const formFields: (
   | "firstName"
@@ -67,7 +67,7 @@ const SignUp = () => {
     try {
       const { user } = await createNewUserWithEmailAndPassword(email, password);
       await createUserDoc(user, { displayName, phoneNumber });
-      dispatch(setUser(user.uid));
+      dispatch(setUserThunk(user));
       navigate("/");
     } catch (err: any) {
       switch (err.code) {

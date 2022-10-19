@@ -14,26 +14,27 @@ import {
 } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { formInputGenerator } from "./functions";
-import { useAppDispatch } from "../../../redux/store/hooks";
-import { setUser } from "../../../redux/features/authSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { setUserThunk } from "../../../redux/features/authSlice";
+import { setIsLoading } from "../../../redux/features/isLoading";
 
 const formFields: ("email" | "password")[] = ["email", "password"];
 
 const SignIn = () => {
   const [formValues, setFormValues] = useState({ email: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useAppSelector((state) => state.isLoading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
 
     const { email, password } = formValues;
 
     try {
       const { user } = await signInUserWithEmailAndPassword(email, password);
-      dispatch(setUser(user.uid));
+      dispatch(setUserThunk(user));
       navigate("/");
     } catch (err: any) {
       switch (err.code) {
@@ -48,12 +49,12 @@ const SignIn = () => {
       }
     }
 
-    setIsLoading(false);
+    dispatch(setIsLoading(false));
   };
 
   const handleGoogleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
 
     try {
       const { user } = await signInWithGooglePopup();
@@ -66,7 +67,7 @@ const SignIn = () => {
       }
     }
 
-    setIsLoading(false);
+    dispatch(setIsLoading(false));
   };
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
@@ -82,9 +83,7 @@ const SignIn = () => {
       <Form onSubmit={handleSignIn}>
         {formInputs}
         <ButtonsContainer>
-          <Button buttonType="inverted" isLoading={isLoading}>
-            Sign In
-          </Button>
+          <Button isLoading={isLoading}>Sign In</Button>
           {isLoading ? null : <GoogleButton onClick={handleGoogleSignIn} />}
         </ButtonsContainer>
       </Form>

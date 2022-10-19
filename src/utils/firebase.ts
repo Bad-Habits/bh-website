@@ -12,7 +12,16 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  query,
+  getDocs,
+} from "firebase/firestore";
+
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -41,6 +50,54 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 
 export const db = getFirestore();
 
+// export const addDocsToCollection = async (
+//   collectionKey: string,
+//   docsToAdd: MerchDataType
+// ) => {
+//   const collectionRef = collection(db, collectionKey);
+//   const batch = writeBatch(db);
+
+//   if (Array.isArray(docsToAdd)) {
+//     for (const curDoc of docsToAdd) {
+//       const docRef = doc(collectionRef);
+//       batch.set(docRef, curDoc);
+//     }
+//   } else {
+//     for (const curDoc in docsToAdd) {
+//       const docRef = doc(collectionRef, curDoc);
+//       batch.set(docRef, docsToAdd[curDoc]);
+//     }
+//   }
+
+//   await batch.commit();
+//   console.log("batch commited to:", collectionKey);
+// };
+
+export const getUser = async (user: UserInfo) => {
+  try {
+    const userDocRef = doc(db, `users/${user.uid}`);
+    const userSnapshot = await getDoc(userDocRef);
+
+    return userSnapshot;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc: any, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+};
+
 type AdditionalInformationType = { displayName?: string; phoneNumber?: string };
 
 export const createUserDoc = async (
@@ -52,7 +109,9 @@ export const createUserDoc = async (
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
-    const { displayName, email, phoneNumber } = userAuth;
+    let { displayName, email, phoneNumber } = userAuth;
+    if (!displayName) displayName = additionalInformation.displayName || null;
+    if (!phoneNumber) phoneNumber = additionalInformation.phoneNumber || null;
     const createdAt = new Date();
 
     try {
@@ -61,7 +120,7 @@ export const createUserDoc = async (
         email,
         phoneNumber,
         createdAt,
-        ...additionalInformation,
+        isAdmin: false,
       });
     } catch (err) {
       console.error("error creating user:", userAuth);

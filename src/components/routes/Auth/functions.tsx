@@ -35,7 +35,7 @@ export const formInputGenerator = (
         }
         inputProps={{
           type,
-          required: true,
+          required: field !== "phoneNumber",
           onChange: handleChange,
           name: field,
           value: formValues[field],

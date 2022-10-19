@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+// Sign In and Sign Up
 export const AuthFormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,3 +29,6 @@ export const ChangeFormLink = styled(Link)`
   color: blue;
   cursor: pointer;
 `;
+
+// Sign Out
+export const SignOutContainer = styled.div``;

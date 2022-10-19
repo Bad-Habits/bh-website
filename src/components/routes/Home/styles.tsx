@@ -9,4 +9,5 @@ export const IntroVideo = styled.iframe`
   left: 10%;
   width: 80vw;
   height: ${80 * 0.5625}vw;
+  border: none;
 `;

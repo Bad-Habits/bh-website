@@ -17,6 +17,7 @@ import { useAppDispatch } from "../../redux/store/hooks";
 import { setUserThunk } from "../../redux/features/authSlice";
 import SignOut from "../routes/Auth/SignOut";
 import Checkout from "../routes/Checkout/Checkout";
+import Admin from "../routes/Admin/Admin";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="sign-up" element={<SignUp />} />
           <Route path="sign-out" element={<SignOut />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="admin" element={<Admin />} />
         </Route>
       </Routes>
     </>

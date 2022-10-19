@@ -83,9 +83,7 @@ const SignIn = () => {
       <Form onSubmit={handleSignIn}>
         {formInputs}
         <ButtonsContainer>
-          <Button buttonType="inverted" isLoading={isLoading}>
-            Sign In
-          </Button>
+          <Button isLoading={isLoading}>Sign In</Button>
           {isLoading ? null : <GoogleButton onClick={handleGoogleSignIn} />}
         </ButtonsContainer>
       </Form>

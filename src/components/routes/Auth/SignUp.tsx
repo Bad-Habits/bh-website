@@ -98,9 +98,7 @@ const SignUp = () => {
       <Form onSubmit={signUpHandler}>
         {formInputs}
         <ButtonsContainer>
-          <Button buttonType="inverted" isLoading={isLoading}>
-            Sign Up
-          </Button>
+          <Button isLoading={isLoading}>Sign Up</Button>
         </ButtonsContainer>
       </Form>
       <ChangeFormLink to="../sign-in">Already have an account?</ChangeFormLink>

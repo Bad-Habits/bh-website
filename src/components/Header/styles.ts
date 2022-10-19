@@ -5,10 +5,11 @@ import { mobileWidth } from "../../utils/constants";
 
 export const HeaderContainer = styled.header`
   height: 70px;
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin: auto;
+  /* margin-bottom: 25px; */
 
   @media screen and (max-width: ${mobileWidth}) {
     height: 60px;
@@ -17,7 +18,11 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const LogoContainer = styled(Link)``;
+export const LogoContainer = styled(Link)`
+  position: relative;
+  top: -5px;
+  left: -5px;
+`;
 
 export const BhIcon = styled(bhLogo)`
   height: 80px;
@@ -29,15 +34,11 @@ export const BhIcon = styled(bhLogo)`
 `;
 
 export const NavLinks = styled.nav`
-  width: 50%;
+  width: 60%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
-  @media screen and (max-width: ${mobileWidth}) {
-    width: 80%;
-  }
 `;
 
 export const NavLink = styled(Link)`

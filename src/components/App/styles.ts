@@ -1,11 +1,13 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { mobileWidth } from "../../utils/constants";
 
+// Global
 export const GlobalStyle = createGlobalStyle`
   body {
     background-color: black;
     color: red;
-    padding: 20px 40px;
+    margin: auto;
+    padding: 20px;
     font-family: sans-serif;
     text-align: center;
 
@@ -18,4 +20,15 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: red;
   }
+`;
+
+export const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const ContentContainer = styled.div`
+  position: relative;
+  top: 100px;
 `;

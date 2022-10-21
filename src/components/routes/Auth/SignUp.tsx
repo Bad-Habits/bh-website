@@ -12,8 +12,6 @@ import {
 } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { formInputGenerator } from "./functions";
-import { useAppDispatch } from "../../../redux/store/hooks";
-import { setUserThunk } from "../../../redux/features/authSlice";
 
 const formFields: (
   | "firstName"
@@ -41,7 +39,6 @@ const SignUp = () => {
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const signUpHandler = async (e: { preventDefault: () => void }) => {
@@ -67,7 +64,6 @@ const SignUp = () => {
     try {
       const { user } = await createNewUserWithEmailAndPassword(email, password);
       await createUserDoc(user, { displayName, phoneNumber });
-      dispatch(setUserThunk(user));
       navigate("/");
     } catch (err: any) {
       switch (err.code) {

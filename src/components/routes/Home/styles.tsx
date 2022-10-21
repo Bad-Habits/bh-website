@@ -1,13 +1,15 @@
 import styled from "styled-components";
+import { maxWidth } from "../../../utils/constants";
 
 export const HomeContainer = styled.main``;
 
 export const IntroVideo = styled.iframe`
-  position: absolute;
+  position: relative;
   margin: auto;
-  top: 200px;
-  left: 10%;
   width: 80vw;
+  max-width: ${maxWidth};
   height: ${80 * 0.5625}vw;
-  border: none;
+  max-height: 562px;
+  border: 0;
+  z-index: -1;
 `;

@@ -1,16 +1,22 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as bhLogo } from "../../assets/bhLogo.svg";
-import { mobileWidth } from "../../utils/constants";
+import { mobileWidth, maxWidth, minWidth } from "../../utils/constants";
 
+// Header
 export const HeaderContainer = styled.header`
-  height: 70px;
-  width: 90%;
+  position: fixed;
+  height: 80px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin: auto;
-  /* margin-bottom: 25px; */
+  background-color: black;
+  min-width: ${minWidth};
+  max-width: ${maxWidth};
+  z-index: 1;
 
+  border: 1px solid blue;
   @media screen and (max-width: ${mobileWidth}) {
     height: 60px;
     padding: 10px;
@@ -18,18 +24,15 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const LogoContainer = styled(Link)`
-  position: relative;
-  top: -5px;
-  left: -5px;
-`;
-
 export const BhIcon = styled(bhLogo)`
+  position: relative;
+  left: 5px;
   height: 80px;
   width: 80px;
 
   @media screen and (max-width: ${mobileWidth}) {
     width: 60px;
+    height: 60px;
   }
 `;
 
@@ -42,6 +45,7 @@ export const NavLinks = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
-  padding: 10px 15px;
+  width: 80px;
+  /* padding: 10px 15px; */
   cursor: pointer;
 `;

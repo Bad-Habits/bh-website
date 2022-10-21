@@ -1,4 +1,4 @@
-import { GlobalStyle } from "./globalStyles";
+import { GlobalStyle, AppContainer, ContentContainer } from "./styles";
 import { Route, Routes } from "react-router-dom";
 import ContactUs from "../routes/ContactUs/ContactUs";
 import Home from "../routes/Home/Home";
@@ -31,7 +31,7 @@ const App = () => {
           await createUserDoc(user);
           dispatch(setUserThunk(user));
         } catch (err) {
-          console.error(err);
+          console.error("Error in app useEffect:", err);
         }
       } else dispatch(setUserThunk(null));
     });
@@ -40,10 +40,11 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <AppContainer>
       <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Header />}>
+      <Header />
+      <ContentContainer>
+        <Routes>
           <Route index element={<Home />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="tickets" element={<Tickets />} />
@@ -53,9 +54,9 @@ const App = () => {
           <Route path="sign-out" element={<SignOut />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="admin" element={<Admin />} />
-        </Route>
-      </Routes>
-    </>
+        </Routes>
+      </ContentContainer>
+    </AppContainer>
   );
 };
 

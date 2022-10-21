@@ -80,7 +80,7 @@ export const getUser = async (user: UserInfo) => {
 
     return userSnapshot;
   } catch (err) {
-    console.error(err);
+    console.error("Error getting userSnapshot:", err);
   }
 };
 

@@ -15,7 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { formInputGenerator } from "./functions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { setUserThunk } from "../../../redux/features/authSlice";
+
 import { setIsLoading } from "../../../redux/features/isLoading";
 
 const formFields: ("email" | "password")[] = ["email", "password"];
@@ -28,13 +28,10 @@ const SignIn = () => {
 
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    dispatch(setIsLoading(true));
-
     const { email, password } = formValues;
 
     try {
-      const { user } = await signInUserWithEmailAndPassword(email, password);
-      dispatch(setUserThunk(user));
+      await signInUserWithEmailAndPassword(email, password);
       navigate("/");
     } catch (err: any) {
       switch (err.code) {

@@ -2,6 +2,8 @@ import { MerchDataType } from "./types";
 
 // styling
 export const mobileWidth = "800px";
+export const maxWidth = "1000px";
+export const minWidth = "300px";
 
 // data
 export const INTRO_VIDEO_ID = "v72Js1xbnhY";

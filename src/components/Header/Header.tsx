@@ -1,26 +1,19 @@
-import { Outlet } from "react-router-dom";
-import {
-  HeaderContainer,
-  NavLink,
-  BhIcon,
-  LogoContainer,
-  NavLinks,
-} from "./styles";
+import { Link } from "react-router-dom";
+import { HeaderContainer, NavLink, BhIcon, NavLinks } from "./styles";
 
 const Header = () => {
   return (
     <>
       <HeaderContainer>
-        <LogoContainer to="/">
+        <Link to="/">
           <BhIcon />
-        </LogoContainer>
+        </Link>
         <NavLinks>
           <NavLink to="contact-us">Contact Us</NavLink>
           <NavLink to="tickets">Tickets</NavLink>
           <NavLink to="merch">Merch</NavLink>
         </NavLinks>
       </HeaderContainer>
-      <Outlet />
     </>
   );
 };

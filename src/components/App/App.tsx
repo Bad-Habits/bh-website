@@ -31,7 +31,7 @@ const App = () => {
           await createUserDoc(user);
           dispatch(setUserThunk(user));
         } catch (err) {
-          console.error("Error in app useEffect:", err);
+          console.error("Error in auth state change callback:", err);
         }
       } else dispatch(setUserThunk(null));
     });

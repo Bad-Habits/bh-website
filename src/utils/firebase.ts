@@ -20,6 +20,7 @@ import {
   collection,
   query,
   getDocs,
+  writeBatch,
 } from "firebase/firestore";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -45,35 +46,58 @@ provider.setCustomParameters({
   prompt: "select_account",
 });
 
+// Authentication
 export const auth = getAuth();
+
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, provider);
 
+export const createNewUserWithEmailAndPassword = async (
+  email: string,
+  password: string
+) => {
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const signInUserWithEmailAndPassword = async (
+  email: string,
+  password: string
+) => {
+  return await signInWithEmailAndPassword(auth, email, password);
+};
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback: NextFn<UserInfo | null>) =>
+  onAuthStateChanged(auth, callback);
+
+// Firestore
 export const db = getFirestore();
 
-// export const addDocsToCollection = async (
-//   collectionKey: string,
-//   docsToAdd: MerchDataType
-// ) => {
-//   const collectionRef = collection(db, collectionKey);
-//   const batch = writeBatch(db);
+export const addDocsToCollection = async (
+  collectionKey: string,
+  docsToAdd: any
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
 
-//   if (Array.isArray(docsToAdd)) {
-//     for (const curDoc of docsToAdd) {
-//       const docRef = doc(collectionRef);
-//       batch.set(docRef, curDoc);
-//     }
-//   } else {
-//     for (const curDoc in docsToAdd) {
-//       const docRef = doc(collectionRef, curDoc);
-//       batch.set(docRef, docsToAdd[curDoc]);
-//     }
-//   }
+  if (Array.isArray(docsToAdd)) {
+    for (const curDoc of docsToAdd) {
+      const docRef = doc(collectionRef);
+      batch.set(docRef, curDoc);
+    }
+  } else {
+    for (const curDoc in docsToAdd) {
+      const docRef = doc(collectionRef, curDoc);
+      batch.set(docRef, docsToAdd[curDoc]);
+    }
+  }
 
-//   await batch.commit();
-//   console.log("batch commited to:", collectionKey);
-// };
+  await batch.commit();
+  console.log("batch commited to:", collectionKey);
+};
 
+// Authentication and Firestore
 export const getUser = async (user: UserInfo) => {
   try {
     const userDocRef = doc(db, `users/${user.uid}`);
@@ -132,22 +156,3 @@ export const createUserDoc = async (
 
   return userDocRef;
 };
-
-export const createNewUserWithEmailAndPassword = async (
-  email: string,
-  password: string
-) => {
-  return await createUserWithEmailAndPassword(auth, email, password);
-};
-
-export const signInUserWithEmailAndPassword = async (
-  email: string,
-  password: string
-) => {
-  return await signInWithEmailAndPassword(auth, email, password);
-};
-
-export const signOutUser = async () => await signOut(auth);
-
-export const onAuthStateChangedListener = (callback: NextFn<UserInfo | null>) =>
-  onAuthStateChanged(auth, callback);

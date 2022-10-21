@@ -4,10 +4,12 @@ import { ReactComponent as bhLogo } from "../../assets/bhLogo.svg";
 import { mobileWidth, maxWidth, minWidth } from "../../utils/constants";
 
 // Header
-export const HeaderContainer = styled.header`
+type HeaderContainerProps = { sticky: boolean };
+export const HeaderContainer = styled.header<HeaderContainerProps>`
   position: fixed;
+  top: 0;
   height: 80px;
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   margin: auto;
@@ -16,10 +18,8 @@ export const HeaderContainer = styled.header`
   max-width: ${maxWidth};
   z-index: 1;
 
-  border: 1px solid blue;
   @media screen and (max-width: ${mobileWidth}) {
     height: 60px;
-    padding: 10px;
     margin-bottom: 20px;
   }
 `;
@@ -45,7 +45,6 @@ export const NavLinks = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
-  width: 80px;
-  /* padding: 10px 15px; */
+  padding: 10px 15px;
   cursor: pointer;
 `;

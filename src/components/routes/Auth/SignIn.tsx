@@ -30,21 +30,28 @@ const SignIn = () => {
   useEffect(() => {
     (async () => {
       try {
-        const user = await getRedirectResult(auth);
-        if (user) navigate("/");
+        dispatch(setIsLoading(true));
+        const res = await getRedirectResult(auth);
+        dispatch(setIsLoading(false));
+
+        if (res) {
+          // wait for state to update
+          navigate("../checkout");
+        }
       } catch (err) {
         console.error("Error getting redirect result:", err);
       }
     })();
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const { email, password } = formValues;
+    dispatch(setIsLoading(true));
 
     try {
       await signInUserWithEmailAndPassword(email, password);
-      navigate("/");
+      navigate("../checkout");
     } catch (err: any) {
       switch (err.code) {
         case "auth/wrong-password":

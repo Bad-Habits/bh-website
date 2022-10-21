@@ -7,11 +7,12 @@ type FormInputProps = {
 };
 
 const FormInput: FC<FormInputProps> = ({ label, inputProps }) => {
-  const shrink = inputProps.value !== "";
+  const isEmpty = inputProps.value === "";
+  console.log(isEmpty);
   return (
     <Group>
       <Input {...inputProps} />
-      {label && <FormInputLabel shrink={shrink}>{label}</FormInputLabel>}
+      {label && <FormInputLabel isEmpty={isEmpty}>{label}</FormInputLabel>}
     </Group>
   );
 };

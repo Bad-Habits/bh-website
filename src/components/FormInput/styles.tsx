@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const subColor = "grey";
-const mainColor = "black";
+const mainColor = "red";
 
 const shrinkLabelStyles = css`
   top: -14px;
@@ -9,20 +9,38 @@ const shrinkLabelStyles = css`
   color: ${mainColor};
 `;
 
+const isEmptyLabelStyles = css`
+  top: 10px;
+  font-size: 16px;
+  color: ${subColor};
+`;
+
 type FormInputLabelProps = {
-  shrink: boolean;
+  isEmpty: boolean;
 };
 
+// export const FormInputLabel = styled.label<FormInputLabelProps>`
+//   color: ${subColor};
+//   font-size: 16px;
+//   font-weight: normal;
+//   position: absolute;
+//   pointer-events: none;
+//   left: 5px;
+//   top: 10px;
+//   transition: 300ms ease all;
+//   ${({ shrink }) => shrink && isEmptyLabelStyles};
+// `;
+
 export const FormInputLabel = styled.label<FormInputLabelProps>`
-  color: ${subColor};
-  font-size: 16px;
+  color: ${mainColor};
+  font-size: 12px;
   font-weight: normal;
   position: absolute;
   pointer-events: none;
   left: 5px;
-  top: 10px;
+  top: -14px;
   transition: 300ms ease all;
-  ${({ shrink }) => shrink && shrinkLabelStyles};
+  ${({ isEmpty }) => isEmpty && isEmptyLabelStyles};
 `;
 
 export const Input = styled.input`

@@ -1,7 +1,7 @@
 import { MerchDataType } from "./types";
 
 // styling
-export const mobileWidth = "800px";
+export const mobileWidth = "600px";
 export const maxWidth = "1000px";
 export const minWidth = "300px";
 

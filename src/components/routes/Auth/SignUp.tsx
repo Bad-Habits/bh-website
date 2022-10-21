@@ -12,6 +12,8 @@ import {
 } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { formInputGenerator } from "./functions";
+import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { setIsLoading } from "../../../redux/features/isLoading";
 
 const formFields: (
   | "firstName"
@@ -38,12 +40,13 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useAppSelector((state) => state.isLoading);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const signUpHandler = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
 
     const {
       firstName,
@@ -64,11 +67,17 @@ const SignUp = () => {
     try {
       const { user } = await createNewUserWithEmailAndPassword(email, password);
       await createUserDoc(user, { displayName, phoneNumber });
-      navigate("/");
+      navigate("../checkout");
     } catch (err: any) {
       switch (err.code) {
         case "auth/email-already-in-use":
           alert("Cannot create user, email already in use");
+          break;
+        case "auth/weak-password":
+          alert("Password must be at least 6 characters");
+          setFormValues((prev) => {
+            return { ...prev, password: "", confirmPassword: "" };
+          });
           break;
         default:
           console.error(
@@ -76,9 +85,9 @@ const SignUp = () => {
             err
           );
       }
-
-      setIsLoading(true);
     }
+
+    dispatch(setIsLoading(false));
   };
 
   const handleChange = (e: { target: { name: any; value: any } }) => {

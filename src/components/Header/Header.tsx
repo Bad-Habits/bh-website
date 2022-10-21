@@ -4,7 +4,7 @@ import { HeaderContainer, NavLink, BhIcon, NavLinks } from "./styles";
 const Header = () => {
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer sticky={true}>
         <Link to="/">
           <BhIcon />
         </Link>

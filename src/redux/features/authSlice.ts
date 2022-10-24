@@ -39,12 +39,9 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setUserThunk.fulfilled, (state, { payload }) => {
-      console.log("setting user state to", payload);
       state.user = payload;
     });
   },
 });
-
-// export const { } = authSlice.actions;
 
 export default authSlice.reducer;

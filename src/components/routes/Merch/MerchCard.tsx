@@ -23,7 +23,7 @@ const MerchCard: FC<MerchCardProps> = ({ item }) => {
           onClick: () => console.log("add to card needs to be implemented"),
         }}
       >
-        Add to card
+        Add to cart
       </Button>
     </MerchCardContainer>
   );

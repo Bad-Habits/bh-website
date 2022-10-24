@@ -18,14 +18,13 @@ import { setUserThunk } from "../../redux/features/authSlice";
 import SignOut from "../routes/Auth/SignOut";
 import Checkout from "../routes/Checkout/Checkout";
 import Admin from "../routes/Admin/Admin";
+import { fetchProducts } from "../../redux/features/productsSlice";
 
 const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener(async (user) => {
-      console.log("auth state changed:", user);
-
       if (user) {
         try {
           await createUserDoc(user);
@@ -35,6 +34,8 @@ const App = () => {
         }
       } else dispatch(setUserThunk(null));
     });
+
+    dispatch(fetchProducts());
 
     return unsubscribe;
   }, [dispatch]);

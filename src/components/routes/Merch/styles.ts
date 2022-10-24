@@ -1,11 +1,23 @@
 import styled from "styled-components";
+import { mobileWidth } from "../../../utils/constants";
+
+// Merch
+export const MerchContainer = styled.div``;
 
 // MerchCategory
+export const MerchCategoryContainer = styled.div`
+  margin-bottom: 50px;
+`;
+
 export const CategoryContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 20px;
   row-gap: 50px;
+
+  @media screen and (max-width: ${mobileWidth}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export const Title = styled.h3`
@@ -19,7 +31,7 @@ export const MerchCardContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 150px;
+  height: 250px;
   align-items: center;
   position: relative;
 
@@ -31,11 +43,12 @@ export const MerchCardContainer = styled.div`
   }
 
   button {
+    font-size: 12px;
+    display: none;
     width: 80%;
     opacity: 0.7;
     position: absolute;
-    top: 255px;
-    display: none;
+    top: 175px;
   }
 
   &:hover {

@@ -6,6 +6,7 @@ export const AuthFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80vw;
   max-width: 500px;
   margin: auto;
   padding: 10px;

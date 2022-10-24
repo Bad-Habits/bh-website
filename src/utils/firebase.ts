@@ -97,6 +97,14 @@ export const addDocsToCollection = async (
   console.log("batch commited to:", collectionKey);
 };
 
+export const getCollectionData = async (collectionName: string) => {
+  const collectionRef = collection(db, collectionName);
+  const collectionQuery = query(collectionRef);
+  const querySnapshot = await getDocs(collectionQuery);
+
+  return querySnapshot?.docs?.map((doc) => doc.data());
+};
+
 // Authentication and Firestore
 export const getUser = async (user: UserInfo) => {
   try {
@@ -107,20 +115,6 @@ export const getUser = async (user: UserInfo) => {
   } catch (err) {
     console.error("Error getting userSnapshot:", err);
   }
-};
-
-export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, "categories");
-  const q = query(collectionRef);
-
-  const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc: any, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-
-  return categoryMap;
 };
 
 type AdditionalInformationType = { displayName?: string; phoneNumber?: string };

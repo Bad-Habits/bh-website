@@ -30,5 +30,10 @@ export const AppContainer = styled.div`
 
 export const ContentContainer = styled.div`
   position: relative;
+  width: 80%;
   top: 100px;
+
+  @media screen and (max-width: ${mobileWidth}) {
+    width: 100%;
+  }
 `;

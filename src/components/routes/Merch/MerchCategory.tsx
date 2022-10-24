@@ -1,4 +1,4 @@
-import { CategoryContainer, Title } from "./styles";
+import { CategoryContainer, MerchCategoryContainer, Title } from "./styles";
 import MerchCard from "./MerchCard";
 import { MerchItemType } from "../../../utils/types";
 import { FC } from "react";
@@ -10,13 +10,13 @@ type MerchCategoryProps = {
 
 const MerchCategory: FC<MerchCategoryProps> = ({ title, merch }) => {
   return (
-    <>
+    <MerchCategoryContainer>
       <Title>{title.toUpperCase()}</Title>
       <CategoryContainer>
         {merch &&
           merch.map((item) => <MerchCard key={item.name} item={item} />)}
       </CategoryContainer>
-    </>
+    </MerchCategoryContainer>
   );
 };
 

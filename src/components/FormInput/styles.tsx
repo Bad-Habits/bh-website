@@ -19,18 +19,6 @@ type FormInputLabelProps = {
   isEmpty: boolean;
 };
 
-// export const FormInputLabel = styled.label<FormInputLabelProps>`
-//   color: ${subColor};
-//   font-size: 16px;
-//   font-weight: normal;
-//   position: absolute;
-//   pointer-events: none;
-//   left: 5px;
-//   top: 10px;
-//   transition: 300ms ease all;
-//   ${({ shrink }) => shrink && isEmptyLabelStyles};
-// `;
-
 export const FormInputLabel = styled.label<FormInputLabelProps>`
   color: ${mainColor};
   font-size: 12px;

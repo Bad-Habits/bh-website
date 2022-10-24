@@ -19,6 +19,7 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`
   z-index: 1;
 
   @media screen and (max-width: ${mobileWidth}) {
+    width: 100%;
     height: 60px;
     margin-bottom: 20px;
   }

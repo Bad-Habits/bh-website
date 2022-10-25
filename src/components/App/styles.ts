@@ -32,6 +32,9 @@ export const ContentContainer = styled.div`
   position: relative;
   width: 80%;
   top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @media screen and (max-width: ${mobileWidth}) {
     width: 100%;

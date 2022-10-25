@@ -1,7 +1,7 @@
 import { HomeContainer, IntroVideo } from "./styles";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../redux/store/hooks";
-import Button from "../../Button/Button";
+import Button from "../../elements/Button/Button";
 import { INTRO_VIDEO_ID } from "../../../utils/constants";
 
 const Home = () => {

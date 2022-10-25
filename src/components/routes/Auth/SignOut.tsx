@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { signOutUser } from "../../../utils/firebase";
-import Button from "../../Button/Button";
+import Button from "../../elements/Button/Button";
 import { SignOutContainer } from "./styles";
 
 const SignOut = () => {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../../Button/Button";
+import Button from "../../elements/Button/Button";
 import {
   AuthFormContainer,
   ChangeFormLink,
@@ -11,7 +11,7 @@ import {
   createUserDoc,
 } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import { formInputGenerator } from "./functions";
+import { authFormInputGenerator } from "./functions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { setIsLoading } from "../../../redux/features/isLoading";
 
@@ -95,7 +95,11 @@ const SignUp = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const formInputs = formInputGenerator(formFields, formValues, handleChange);
+  const formInputs = authFormInputGenerator(
+    formFields,
+    formValues,
+    handleChange
+  );
 
   return (
     <AuthFormContainer>

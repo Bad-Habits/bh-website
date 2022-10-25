@@ -1,12 +1,22 @@
 import { MerchDataType } from "./types";
 
 // styling
-export const mobileWidth = "600px";
+export const mobileWidth = "800px";
 export const maxWidth = "1000px";
 export const minWidth = "300px";
 
 // data
 export const INTRO_VIDEO_ID = "v72Js1xbnhY";
+
+// admin forms
+export type AdminOptionsType = "add" | "modify" | "remove";
+export const adminOptions: AdminOptionsType[] = ["add", "modify", "remove"];
+
+export type TicketType = "uid" | "price" | "quantity" | "date";
+export const ticketOptions: TicketType[] = ["uid", "price", "quantity", "date"];
+
+export type MerchType = "name" | "price" | "quantity";
+export const merchOptions: MerchType[] = ["name", "price", "quantity"];
 
 // temp
 export const MERCH_DATA: MerchDataType = {

@@ -43,7 +43,6 @@ export const MerchCardContainer = styled.div`
   }
 
   button {
-    font-size: 12px;
     display: none;
     width: 80%;
     opacity: 0.7;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Button from "../../Button/Button";
+import Button from "../../elements/Button/Button";
 import GoogleButton from "react-google-button";
 import {
   AuthFormContainer,
@@ -14,7 +14,7 @@ import {
 } from "../../../utils/firebase";
 import { getRedirectResult } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { formInputGenerator } from "./functions";
+import { authFormInputGenerator } from "./functions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 
 import { setIsLoading } from "../../../redux/features/isLoading";
@@ -73,7 +73,11 @@ const SignIn = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const formInputs = formInputGenerator(formFields, formValues, handleChange);
+  const formInputs = authFormInputGenerator(
+    formFields,
+    formValues,
+    handleChange
+  );
 
   return (
     <AuthFormContainer>

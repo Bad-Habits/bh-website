@@ -142,7 +142,7 @@ export const createUserDoc = async (
         isAdmin: false,
       });
     } catch (err) {
-      console.error("error creating user:", userAuth);
+      console.error("Error creating user:", userAuth);
       alert("Authentication was not successful, please try again");
       return;
     }

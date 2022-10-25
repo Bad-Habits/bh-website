@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { MerchItemType } from "../../../utils/types";
-import Button from "../../Button/Button";
+import Button from "../../elements/Button/Button";
 import { Footer, MerchCardContainer, Name, Price } from "./styles";
 
 interface MerchCardProps {

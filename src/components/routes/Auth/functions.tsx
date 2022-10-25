@@ -1,6 +1,6 @@
-import FormInput from "../../FormInput/FormInput";
+import FormInput from "../../elements/FormInput/FormInput";
 
-export const formInputGenerator = (
+export const authFormInputGenerator = (
   formFields: string[],
   formValues: any,
   handleChange: (e: { target: { name: any; value: any } }) => void

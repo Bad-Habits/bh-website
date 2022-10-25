@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { maxWidth } from "../../../utils/constants";
 
-export const HomeContainer = styled.main``;
+export const HomeContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const IntroVideo = styled.iframe`
   position: relative;

@@ -7,7 +7,7 @@ export const BaseButton = styled.button`
   letter-spacing: 0.5px;
   line-height: 50px;
   padding: 0 35px 0 35px;
-  font-size: 15px;
+  font-size: 12px;
   background-color: black;
   color: red;
   border: 1px solid red;
@@ -22,6 +22,14 @@ export const BaseButton = styled.button`
     background-color: red;
     color: black;
     border: 1px solid black;
+  }
+
+  :disabled {
+    opacity: 0.7;
+    background-color: black;
+    color: red;
+    border: 1px solid red;
+    pointer-events: none;
   }
 `;
 

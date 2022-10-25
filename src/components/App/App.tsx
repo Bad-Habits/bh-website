@@ -1,13 +1,18 @@
 import { GlobalStyle, AppContainer, ContentContainer } from "./styles";
 import { Route, Routes } from "react-router-dom";
-import ContactUs from "../routes/ContactUs/ContactUs";
-import Home from "../routes/Home/Home";
-import Merch from "../routes/Merch/Merch";
 import Header from "../Header/Header";
-import Tickets from "../routes/Tickets/Tickets";
+import {
+  Home,
+  ContactUs,
+  Tickets,
+  Merch,
+  SignIn,
+  SignUp,
+  SignOut,
+  Checkout,
+  Admin,
+} from "../routes";
 
-import SignIn from "../routes/Auth/SignIn";
-import SignUp from "../routes/Auth/SignUp";
 import { useEffect } from "react";
 import {
   createUserDoc,
@@ -15,9 +20,6 @@ import {
 } from "../../utils/firebase";
 import { useAppDispatch } from "../../redux/store/hooks";
 import { setUserThunk } from "../../redux/features/authSlice";
-import SignOut from "../routes/Auth/SignOut";
-import Checkout from "../routes/Checkout/Checkout";
-import Admin from "../routes/Admin/Admin";
 import { fetchProducts } from "../../redux/features/productsSlice";
 
 const App = () => {
@@ -54,7 +56,7 @@ const App = () => {
           <Route path="sign-up" element={<SignUp />} />
           <Route path="sign-out" element={<SignOut />} />
           <Route path="checkout" element={<Checkout />} />
-          <Route path="admin" element={<Admin />} />
+          <Route path="admin" element={<Admin />}></Route>
         </Routes>
       </ContentContainer>
     </AppContainer>

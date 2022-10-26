@@ -2,7 +2,8 @@ import { FC, useState } from "react";
 import Button from "../../elements/Button/Button";
 import AddForm from "./AddForm";
 import { ManageButtons, ManageContainer } from "./styles";
-import { adminOptions, AdminOptionsType } from "../../../utils/constants";
+import { adminOptions } from "../../../utils/constants";
+import { AdminOptionsType } from "../../../utils/types";
 
 type ManageProductType = {
   curProduct: string;
@@ -30,7 +31,8 @@ const ManageProduct: FC<ManageProductType> = ({ curProduct }) => {
           </Button>
         ))}
       </ManageButtons>
-      <AddForm curProduct={curProduct} curForm={curForm} />
+      {curForm === "add" && <AddForm curProduct={curProduct} />}
+      {curForm === "edit" && <AddForm curProduct={curProduct} />}
     </ManageContainer>
   );
 };

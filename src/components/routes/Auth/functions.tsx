@@ -1,4 +1,4 @@
-import FormInput from "../../elements/FormInput/FormInput";
+import FormInput from "../../elements/Form/FormInput";
 
 export const authFormInputGenerator = (
   formFields: string[],

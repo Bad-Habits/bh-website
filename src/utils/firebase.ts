@@ -22,6 +22,7 @@ import {
   getDocs,
   writeBatch,
 } from "firebase/firestore";
+import { TicketType } from "./types";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -149,4 +150,8 @@ export const createUserDoc = async (
   }
 
   return userDocRef;
+};
+
+export const createTicketDoc = (ticketInformation: TicketType) => {
+  console.log("ticket information:", ticketInformation);
 };

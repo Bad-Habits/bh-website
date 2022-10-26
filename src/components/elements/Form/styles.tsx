@@ -1,11 +1,30 @@
 import styled, { css } from "styled-components";
 
+// Form
+export const FormContainer = styled.div`
+  background-color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80vw;
+  max-width: 500px;
+  margin: auto;
+  padding: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+`;
+
+export const FormElement = styled.form`
+  width: 80%;
+`;
+
+// FormInput
 const subColor = "grey";
 const mainColor = "red";
 
 const shrinkLabelStyles = css`
-  top: -14px;
-  font-size: 12px;
+  top: -17px;
+  font-size: 15px;
   color: ${mainColor};
 `;
 
@@ -34,7 +53,7 @@ export const FormInputLabel = styled.label<FormInputLabelProps>`
 export const Input = styled.input`
   background: none;
   background-color: white;
-  color: ${subColor};
+  color: black;
   font-size: 18px;
   padding: 10px 10px 10px 5px;
   display: block;

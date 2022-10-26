@@ -7,7 +7,7 @@ type FormInputProps = {
 };
 
 const FormInput: FC<FormInputProps> = ({ label, inputProps }) => {
-  const isEmpty = inputProps.value === "";
+  const isEmpty = inputProps.value === "" && label !== "Date";
   return (
     <Group>
       <Input {...inputProps} />

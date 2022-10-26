@@ -1,4 +1,9 @@
-import { MerchDataType } from "./types";
+import {
+  AdminOptionsType,
+  MerchDataType,
+  MerchItemType,
+  TicketType,
+} from "./types";
 
 // styling
 export const mobileWidth = "800px";
@@ -9,14 +14,20 @@ export const minWidth = "300px";
 export const INTRO_VIDEO_ID = "v72Js1xbnhY";
 
 // admin forms
-export type AdminOptionsType = "add" | "modify" | "remove";
-export const adminOptions: AdminOptionsType[] = ["add", "modify", "remove"];
-
-export type TicketType = "uid" | "price" | "quantity" | "date";
-export const ticketOptions: TicketType[] = ["uid", "price", "quantity", "date"];
-
-export type MerchType = "name" | "price" | "quantity";
-export const merchOptions: MerchType[] = ["name", "price", "quantity"];
+export const adminOptions: AdminOptionsType[] = ["add", "edit"];
+export const ticketOptions: (keyof TicketType)[] = [
+  "name",
+  "price",
+  "quantity",
+  "date",
+];
+export const merchOptions: (keyof MerchItemType)[] = [
+  "name",
+  "imageUrl",
+  "price",
+  "sizes",
+  "colours",
+];
 
 // temp
 export const MERCH_DATA: MerchDataType = {

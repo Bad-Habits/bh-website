@@ -9,15 +9,14 @@ interface ButtonProps extends PropsWithChildren {
 
 const Button: FC<ButtonProps> = ({
   children,
-  buttonType = "base",
   isLoading = false,
+  buttonType = "base",
   buttonProps,
 }) => {
   const CustomButton = {
     base: BaseButton,
     inverted: InvertedButton,
   }[buttonType];
-
   return (
     <CustomButton
       {...buttonProps}

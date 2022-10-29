@@ -56,7 +56,7 @@ const App = () => {
           <Route path="sign-up" element={<SignUp />} />
           <Route path="sign-out" element={<SignOut />} />
           <Route path="checkout" element={<Checkout />} />
-          <Route path="admin" element={<Admin />}></Route>
+          <Route path="admin" element={<Admin />} />
         </Routes>
       </ContentContainer>
     </AppContainer>

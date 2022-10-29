@@ -1,10 +1,3 @@
-import {
-  AdminOptionsType,
-  MerchDataType,
-  MerchItemType,
-  TicketType,
-} from "./types";
-
 // styling
 export const mobileWidth = "800px";
 export const maxWidth = "1000px";
@@ -13,24 +6,8 @@ export const minWidth = "300px";
 // data
 export const INTRO_VIDEO_ID = "v72Js1xbnhY";
 
-// admin forms
-export const adminOptions: AdminOptionsType[] = ["add", "edit"];
-export const ticketOptions: (keyof TicketType)[] = [
-  "name",
-  "price",
-  "quantity",
-  "date",
-];
-export const merchOptions: (keyof MerchItemType)[] = [
-  "name",
-  "imageUrl",
-  "price",
-  "sizes",
-  "colours",
-];
-
 // temp
-export const MERCH_DATA: MerchDataType = {
+export const MERCH_DATA = {
   hats: [
     {
       name: "hat1",

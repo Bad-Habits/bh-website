@@ -1,9 +1,8 @@
 import MerchCategory from "./MerchCategory";
-import { MerchDataType } from "../../../utils/types";
 import { MERCH_DATA } from "../../../utils/constants";
 import { MerchContainer } from "./styles";
 
-const merchData: MerchDataType = MERCH_DATA;
+const merchData: any = MERCH_DATA;
 
 const Merch = () => {
   const titles = Object.keys(merchData);

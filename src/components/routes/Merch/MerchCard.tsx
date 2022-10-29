@@ -1,10 +1,9 @@
 import { FC } from "react";
-import { MerchItemType } from "../../../utils/types";
 import Button from "../../elements/Button/Button";
 import { Footer, MerchCardContainer, Name, Price } from "./styles";
 
 interface MerchCardProps {
-  item: MerchItemType;
+  item: any;
 }
 
 const MerchCard: FC<MerchCardProps> = ({ item }) => {

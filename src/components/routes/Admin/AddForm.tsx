@@ -1,22 +1,28 @@
-import { FC, FormEvent } from "react";
+import { FC } from "react";
 import Form from "../../elements/Form/Form";
-import { ticketOptions, merchOptions } from "../../../utils/constants";
-import { MerchItemType, TicketType } from "../../../utils/types";
+import { createMerchDoc, createEventDoc } from "../../../utils/firebase";
+import { useAppDispatch } from "../../../redux/store/hooks";
+import { setIsLoading } from "../../../redux/features/isLoading";
 
-type ManageFormProps = {
+const addEventFields = ["name", "location", "date"];
+
+type AddFormProps = {
   curProduct: string;
 };
 
-const AddForm: FC<ManageFormProps> = ({ curProduct }) => {
+const AddForm: FC<AddFormProps> = ({ curProduct }) => {
+  const dispatch = useAppDispatch();
   const header = `Add ${curProduct}`;
-  const fields = curProduct === "tickets" ? ticketOptions : merchOptions;
+  const isEvents = curProduct === "events";
+  const fields = isEvents ? addEventFields : [];
 
-  const handleSubmit = (
-    e: FormEvent,
-    formValues: TicketType | MerchItemType
-  ) => {
-    e.preventDefault();
-    console.log("add form submitted:", e, formValues);
+  const handleSubmit = async (formValues: any) => {
+    dispatch(setIsLoading(true));
+    if (isEvents) {
+      const doc = await createEventDoc(formValues);
+      console.log("doc returned from AddForm:", doc);
+    } else createMerchDoc(formValues);
+    dispatch(setIsLoading(false));
   };
 
   return (

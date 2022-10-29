@@ -21,8 +21,8 @@ import {
   query,
   getDocs,
   writeBatch,
+  Timestamp,
 } from "firebase/firestore";
-import { TicketType } from "./types";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -95,7 +95,6 @@ export const addDocsToCollection = async (
   }
 
   await batch.commit();
-  console.log("batch commited to:", collectionKey);
 };
 
 export const getCollectionData = async (collectionName: string) => {
@@ -152,6 +151,23 @@ export const createUserDoc = async (
   return userDocRef;
 };
 
-export const createTicketDoc = (ticketInformation: TicketType) => {
-  console.log("ticket information:", ticketInformation);
+export const createEventDoc = async (ticketInformation: any) => {
+  const { name, location, date } = ticketInformation;
+
+  try {
+    const collectionRef = collection(db, "events");
+    return await setDoc(doc(collectionRef), {
+      name,
+      location,
+      time: Timestamp.fromDate(new Date(date)),
+      isPublic: false,
+      tickets: {},
+    });
+  } catch (error) {
+    console.error("Error setting event doc:", error);
+  }
+};
+
+export const createMerchDoc = async (merchInformation: any) => {
+  console.log("createMerchDoc needs a lot of work", merchInformation);
 };

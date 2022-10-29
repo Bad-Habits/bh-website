@@ -1,11 +1,11 @@
 import { CategoryContainer, MerchCategoryContainer, Title } from "./styles";
 import MerchCard from "./MerchCard";
-import { MerchItemType } from "../../../utils/types";
+
 import { FC } from "react";
 
 type MerchCategoryProps = {
   title: string;
-  merch: MerchItemType[];
+  merch: any[];
 };
 
 const MerchCategory: FC<MerchCategoryProps> = ({ title, merch }) => {

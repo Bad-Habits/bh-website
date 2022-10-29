@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../redux/store/hooks";
 import Button from "../../elements/Button/Button";
 import ManageProduct from "./ManageProduct";
-import { AdminContainer } from "./styles";
+import { AdminContainer, ManageButtons } from "./styles";
+
+const products = ["events", "merch"];
 
 const Admin = () => {
-  const [curProduct, setCurProduct] = useState("");
+  const [curProduct, setCurProduct] = useState("events");
   const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
@@ -14,26 +16,29 @@ const Admin = () => {
     if (!user?.isAdmin) navigate("../");
   }, [user, navigate]);
 
-  const handleManageTickets = () => {
-    setCurProduct("tickets");
-  };
-
-  const handleManageMerch = () => {
-    setCurProduct("merch");
+  const handleClick = (product: string) => {
+    setCurProduct(product);
   };
 
   return (
     <AdminContainer>
-      {curProduct === "" ? (
-        <>
-          <Button buttonProps={{ onClick: handleManageTickets }}>
-            Tickets
-          </Button>
-          <Button buttonProps={{ onClick: handleManageMerch }}>Merch</Button>
-        </>
-      ) : (
-        <ManageProduct curProduct={curProduct} />
-      )}
+      <ManageButtons>
+        {products.map((product) => {
+          return (
+            <Button
+              key={product}
+              buttonProps={{
+                disabled: product === curProduct,
+                onClick: () => handleClick(product),
+              }}
+            >
+              {product}
+            </Button>
+          );
+        })}
+      </ManageButtons>
+
+      <ManageProduct curProduct={curProduct} />
     </AdminContainer>
   );
 };

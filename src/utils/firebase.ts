@@ -98,11 +98,16 @@ export const addDocsToCollection = async (
 };
 
 export const getCollectionData = async (collectionName: string) => {
-  const collectionRef = collection(db, collectionName);
-  const collectionQuery = query(collectionRef);
-  const querySnapshot = await getDocs(collectionQuery);
+  try {
+    const collectionRef = collection(db, collectionName);
+    const collectionQuery = query(collectionRef);
+    const querySnapshot = await getDocs(collectionQuery);
 
-  return querySnapshot?.docs?.map((doc) => doc.data());
+    return querySnapshot.docs?.map((doc) => doc.data());
+  } catch (err) {
+    console.error("Error getting docs:", err);
+    return [];
+  }
 };
 
 // Authentication and Firestore
@@ -151,15 +156,23 @@ export const createUserDoc = async (
   return userDocRef;
 };
 
-export const createEventDoc = async (ticketInformation: any) => {
+type TicketInformationType = {
+  name: string;
+  location: string;
+  date: string;
+};
+
+export const createEventDoc = async (
+  ticketInformation: TicketInformationType
+) => {
   const { name, location, date } = ticketInformation;
 
   try {
     const collectionRef = collection(db, "events");
-    return await setDoc(doc(collectionRef), {
+    await setDoc(doc(collectionRef), {
       name,
       location,
-      time: Timestamp.fromDate(new Date(date)),
+      date: Timestamp.fromDate(new Date(date)),
       isPublic: false,
       tickets: {},
     });

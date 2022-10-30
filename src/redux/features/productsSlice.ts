@@ -1,20 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getCollectionData } from "../../utils/firebase";
 
-type ProductsStateType = { tickets: any[]; merch: any[] };
+type ProductsStateType = { events: any[]; merch: any[] };
 
 const initialState: ProductsStateType = {
-  tickets: [],
+  events: [],
   merch: [],
 };
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const ticketsPromise = getCollectionData("tickets");
+    const eventsPromise = getCollectionData("events");
     const merchPromise = getCollectionData("merch");
-    const [tickets, merch] = await Promise.all([ticketsPromise, merchPromise]);
-    return { tickets, merch };
+    const [events, merch] = await Promise.all([eventsPromise, merchPromise]);
+
+    events.forEach((event) => {
+      event.date = new Date(event.date.seconds * 1000);
+    });
+
+    return { events, merch };
   }
 );
 
@@ -24,7 +29,7 @@ const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, { payload }) => {
-      state.tickets = payload.tickets;
+      state.events = payload.events;
       state.merch = payload.merch;
     });
   },

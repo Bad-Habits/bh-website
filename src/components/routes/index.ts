@@ -4,6 +4,6 @@ export { default as SignIn } from "./Auth/SignIn";
 export { default as SignUp } from "./Auth/SignUp";
 export { default as SignOut } from "./Auth/SignOut";
 export { default as ContactUs } from "./ContactUs/ContactUs";
-export { default as Tickets } from "./Tickets/Tickets";
+export { default as Events } from "./Events/Events";
 export { default as Merch } from "./Merch/Merch";
 export { default as Checkout } from "./Checkout/Checkout";

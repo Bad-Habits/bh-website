@@ -1,23 +1,22 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../redux/store/hooks";
 import Button from "../../elements/Button/Button";
-import ManageProduct from "./ManageProduct";
 import { AdminContainer, ManageButtons } from "./styles";
 
 const products = ["events", "merch"];
 
 const Admin = () => {
-  const [curProduct, setCurProduct] = useState("events");
   const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (!user?.isAdmin) navigate("../");
   }, [user, navigate]);
 
   const handleClick = (product: string) => {
-    setCurProduct(product);
+    navigate(product);
   };
 
   return (
@@ -28,7 +27,7 @@ const Admin = () => {
             <Button
               key={product}
               buttonProps={{
-                disabled: product === curProduct,
+                disabled: pathname.split("/").includes(product),
                 onClick: () => handleClick(product),
               }}
             >
@@ -38,7 +37,7 @@ const Admin = () => {
         })}
       </ManageButtons>
 
-      <ManageProduct curProduct={curProduct} />
+      <Outlet />
     </AdminContainer>
   );
 };

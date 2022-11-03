@@ -40,7 +40,6 @@ const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, { payload }) => {
-      console.log({ payload });
       state.events = payload.events;
       state.merch = payload.merch;
     });

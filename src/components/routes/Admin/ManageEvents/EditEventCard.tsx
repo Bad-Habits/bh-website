@@ -16,16 +16,28 @@ const EditEventCard: FC<EditEventCardProps> = ({
 }) => {
   const { name, location, date, tickets, isPublic } = event;
 
-  const fields = ["name", "location", "date", "isPublic", "tickets"];
-
   const handleSubmit = () => {
     console.log("needs work");
   };
 
+  const ticketsFormatted = Object.keys(tickets).map((ticket) => {
+    return {
+      tier: ticket,
+      price: tickets[ticket].price,
+      quantity: tickets[ticket].total,
+    };
+  });
+
   return isOpen ? (
     <Form
       header={`Edit ${name}`}
-      fields={fields}
+      initialFormValues={{
+        name,
+        location,
+        date: date.toISOString().slice(0, -1),
+        tickets: ticketsFormatted,
+        isPublic,
+      }}
       handleSubmit={handleSubmit}
       buttonText="Save"
     />

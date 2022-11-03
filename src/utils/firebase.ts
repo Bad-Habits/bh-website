@@ -166,12 +166,13 @@ type EventInformationType = {
   location: string;
   date: string;
   tickets: TicketType[];
+  isPublic: boolean;
 };
 
 export const createEventDoc = async (
   ticketInformation: EventInformationType
 ) => {
-  const { name, location, date, tickets } = ticketInformation;
+  const { name, location, date, tickets, isPublic } = ticketInformation;
 
   try {
     const collectionRef = collection(db, "events");
@@ -179,7 +180,7 @@ export const createEventDoc = async (
       name,
       location,
       date: Timestamp.fromDate(new Date(date)),
-      isPublic: false,
+      isPublic,
       tickets: tickets.reduce((acc: any, cur: any) => {
         if (cur.tier !== "")
           acc[cur.tier] = {

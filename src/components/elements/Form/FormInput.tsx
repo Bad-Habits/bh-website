@@ -8,6 +8,18 @@ type FormInputProps = {
 
 const FormInput: FC<FormInputProps> = ({ label, inputProps }) => {
   const isEmpty = inputProps.value === "" && label !== "Date";
+
+  if (inputProps.type === "checkbox") {
+    let checked = false;
+    if (inputProps.value) checked = true;
+    return (
+      <Group>
+        <input {...inputProps} checked={checked} />
+        <label>{label}</label>
+      </Group>
+    );
+  }
+
   return (
     <Group>
       <Input {...inputProps} />

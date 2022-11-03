@@ -56,12 +56,12 @@ type FormInputLabelProps = {
 
 export const FormInputLabel = styled.label<FormInputLabelProps>`
   color: ${mainColor};
-  font-size: 12px;
+  font-size: 15px;
   font-weight: normal;
   position: absolute;
   pointer-events: none;
-  left: 5px;
-  top: -14px;
+  left: 1px;
+  top: -17px;
   transition: 300ms ease all;
   ${({ isEmpty }) => isEmpty && isEmptyLabelStyles};
 `;

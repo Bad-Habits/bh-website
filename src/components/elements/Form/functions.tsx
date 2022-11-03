@@ -2,17 +2,12 @@ import FormInput from "./FormInput";
 import { FormStateType } from "./Form";
 import { AdditionalFormInputs } from "./styles";
 import Button from "../Button/Button";
-
-export const generateDefaultFormValues = (fields: (string | string[])[]) => {
-  return fields.reduce((acc: any, field) => {
-    if (typeof field === "string") acc[field] = "";
-    else acc[field[0]] = [];
-    return acc;
-  }, {});
-};
+import { HandleChangeType } from "../../../utils/types";
 
 const getInputType = (field: string) => {
   switch (field) {
+    case "isPublic":
+      return "checkbox";
     case "email":
       return "email";
     case "phoneNumber":
@@ -33,28 +28,23 @@ const getInputType = (field: string) => {
 const generateFormInput = (
   key: any,
   field: string,
+  name: string,
   value: string,
-  handleChange: (e: { target: { name: any; value: any } }) => void,
-  innerField?: string
+  required: boolean,
+  handleChange: HandleChangeType
 ) => {
-  const type = innerField ? getInputType(innerField) : getInputType(field);
-  const name = innerField ? field + "." + innerField : field;
-  const required = innerField === undefined && field !== "phoneNumber";
-
-  const label = innerField ? innerField.split(".").pop() || "" : field;
-
   return (
     <FormInput
       key={key}
       label={
-        label[0].toUpperCase() +
-        label
+        field[0].toUpperCase() +
+        field
           .slice(1)
           .split(/(?=[A-Z])/)
           .join(" ")
       }
       inputProps={{
-        type,
+        type: getInputType(field),
         name,
         value,
         onChange: handleChange,
@@ -64,74 +54,86 @@ const generateFormInput = (
   );
 };
 
-const addField = (fields: string[], setFormValues: any) => {
+const addField = (field: string, innerFields: string[], setFormValues: any) => {
   setFormValues((prev: any) => {
     const newFormValues = { ...prev };
-    const newObj: any = {};
+    const newObj = innerFields.reduce((acc: any, cur) => {
+      acc[cur] = "";
+      return acc;
+    }, {});
 
-    for (let i = 1; i < fields.length; i++) {
-      newObj[fields[i]] = "";
-    }
-
-    newFormValues[fields[0]].push(newObj);
+    newFormValues[field].push(newObj);
     return newFormValues;
   });
 };
 
+const generateNestedFormInput = (
+  elements: any[],
+  field: string,
+  values: any,
+  handleChange: HandleChangeType,
+  setFormValues: any
+) => {
+  for (let i = 0; i < values.length; i++) {
+    elements.push(<hr key={elements.length} />);
+    for (const innerField in values[i]) {
+      elements.push(
+        generateFormInput(
+          elements.length,
+          innerField,
+          field + "." + i + "." + innerField,
+          values[i][innerField],
+          false,
+          handleChange
+        )
+      );
+    }
+  }
+
+  elements.push(
+    <AdditionalFormInputs key={elements.length}>
+      <h2>{field}</h2>
+      <Button
+        buttonProps={{
+          type: "button",
+          onClick: () => addField(field, Object.keys(values[0]), setFormValues),
+        }}
+      >
+        Add
+      </Button>
+    </AdditionalFormInputs>
+  );
+};
+
 export const generateFormElements = (
-  fields: (string | string[])[],
   formValues: FormStateType,
   setFormValues: any,
-  handleChange: (e: { target: { name: any; value: any } }) => void
+  handleChange: HandleChangeType
 ) => {
   const elements: any[] = [];
 
   Object.keys(formValues).forEach((field) => {
     if (Array.isArray(formValues[field])) {
-      const compositeField = formValues[field];
-
-      for (let i = 0; i < compositeField.length; i++) {
-        elements.push(<hr key={elements.length} />);
-        for (const key in compositeField[i]) {
-          elements.push(
-            generateFormInput(
-              elements.length,
-              field,
-              formValues[field][i][key],
-              handleChange,
-              `${i}.${key}`
-            )
-          );
-        }
-      }
+      generateNestedFormInput(
+        elements,
+        field,
+        formValues[field],
+        handleChange,
+        setFormValues
+      );
     } else {
       elements.push(
         generateFormInput(
           elements.length,
           field,
+          field,
           formValues[field],
+          false,
           handleChange
         )
       );
     }
   });
 
-  for (const field of fields) {
-    if (typeof field === "string") continue;
-
-    elements.push(
-      <AdditionalFormInputs key={elements.length}>
-        <h2>{field[0]}</h2>
-        <Button
-          buttonProps={{
-            type: "button",
-            onClick: () => addField(field, setFormValues),
-          }}
-        >
-          Add
-        </Button>
-      </AdditionalFormInputs>
-    );
-  }
   return elements;
 };

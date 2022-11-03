@@ -1,12 +1,13 @@
 import { FC, FormEventHandler, useState } from "react";
 import { useAppSelector } from "../../../redux/store/hooks";
+import { HandleChangeType } from "../../../utils/types";
 import Button from "../Button/Button";
-import { generateDefaultFormValues, generateFormElements } from "./functions";
+import { generateFormElements } from "./functions";
 import { FormContainer, FormElement } from "./styles";
 
 type FormProps = {
   header: string;
-  fields: (string | string[])[];
+  initialFormValues: { [key: string]: any };
   handleSubmit: (formValues: any) => void;
   buttonText: string;
 };
@@ -15,28 +16,28 @@ export interface FormStateType {
   [key: string]: any;
 }
 
-const Form: FC<FormProps> = ({ header, fields, handleSubmit, buttonText }) => {
-  const [formValues, setFormValues] = useState<FormStateType>(
-    generateDefaultFormValues(fields)
-  );
-
+const Form: FC<FormProps> = ({
+  header,
+  initialFormValues,
+  handleSubmit,
+  buttonText,
+}) => {
+  const [formValues, setFormValues] =
+    useState<FormStateType>(initialFormValues);
   const isLoading = useAppSelector((state) => state.isLoading);
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
-    const { name, value } = e.target;
+  const handleChange: HandleChangeType = (e) => {
+    let { name, value } = e.target;
+
+    if (e.target.hasOwnProperty("checked")) value = e.target.checked;
 
     if (!name.includes("."))
       return setFormValues({ ...formValues, [name]: value });
 
     setFormValues((prev) => {
       const newFormValues = { ...prev };
-      const segments = name.split(".");
-      let cur = newFormValues;
-
-      for (let i = 0; i < segments.length - 1; i++) {
-        cur = cur[segments[i]];
-      }
-      cur[segments[segments.length - 1]] = value;
+      const [field, i, innerField] = name.split(".");
+      prev[field][i][innerField] = value;
       return newFormValues;
     });
   };
@@ -44,13 +45,14 @@ const Form: FC<FormProps> = ({ header, fields, handleSubmit, buttonText }) => {
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     handleSubmit(formValues);
+    console.log(formValues);
   };
 
   return (
     <FormContainer>
       <h2>{header.toUpperCase()}</h2>
       <FormElement onSubmit={handleFormSubmit}>
-        {generateFormElements(fields, formValues, setFormValues, handleChange)}
+        {generateFormElements(formValues, setFormValues, handleChange)}
         <Button isLoading={isLoading}>{buttonText}</Button>
       </FormElement>
     </FormContainer>

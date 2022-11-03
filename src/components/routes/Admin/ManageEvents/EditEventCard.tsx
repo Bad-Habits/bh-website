@@ -1,22 +1,22 @@
 import { FC } from "react";
 import Button from "../../../elements/Button/Button";
 import Form from "../../../elements/Form/Form";
-import { EventPreviewContainer, TicketContainer } from "./styles";
+import { EventPreviewContainer } from "./styles";
 
 type EditEventCardProps = {
   event: any;
   isOpen: boolean;
-  handleClick: () => void;
+  handleOpen: () => void;
 };
 
 const EditEventCard: FC<EditEventCardProps> = ({
   event,
   isOpen,
-  handleClick,
+  handleOpen,
 }) => {
   const { name, location, date, tickets, isPublic } = event;
 
-  const fields = [""];
+  const fields = ["name", "location", "date", "isPublic", "tickets"];
 
   const handleSubmit = () => {
     console.log("needs work");
@@ -32,7 +32,7 @@ const EditEventCard: FC<EditEventCardProps> = ({
   ) : (
     <EventPreviewContainer>
       <h3>{name}</h3>
-      <Button buttonProps={{ onClick: handleClick }}>Edit</Button>
+      <Button buttonProps={{ onClick: handleOpen }}>Edit</Button>
     </EventPreviewContainer>
   );
 };

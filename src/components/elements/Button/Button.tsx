@@ -17,6 +17,7 @@ const Button: FC<ButtonProps> = ({
     base: BaseButton,
     inverted: InvertedButton,
   }[buttonType];
+
   return (
     <CustomButton
       {...buttonProps}

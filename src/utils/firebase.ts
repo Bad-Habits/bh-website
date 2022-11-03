@@ -102,7 +102,6 @@ export const getCollectionData = async (collectionName: string) => {
     const collectionRef = collection(db, collectionName);
     const collectionQuery = query(collectionRef);
     const querySnapshot = await getDocs(collectionQuery);
-
     return querySnapshot.docs?.map((doc) => doc.data());
   } catch (err) {
     console.error("Error getting docs:", err);
@@ -156,16 +155,23 @@ export const createUserDoc = async (
   return userDocRef;
 };
 
-type TicketInformationType = {
+type TicketType = {
+  tier: string;
+  price: string;
+  quantity: string;
+};
+
+type EventInformationType = {
   name: string;
   location: string;
   date: string;
+  tickets: TicketType[];
 };
 
 export const createEventDoc = async (
-  ticketInformation: TicketInformationType
+  ticketInformation: EventInformationType
 ) => {
-  const { name, location, date } = ticketInformation;
+  const { name, location, date, tickets } = ticketInformation;
 
   try {
     const collectionRef = collection(db, "events");
@@ -174,7 +180,15 @@ export const createEventDoc = async (
       location,
       date: Timestamp.fromDate(new Date(date)),
       isPublic: false,
-      tickets: {},
+      tickets: tickets.reduce((acc: any, cur: any) => {
+        if (cur.tier !== "")
+          acc[cur.tier] = {
+            price: +cur.price,
+            remaining: +cur.quantity,
+            total: +cur.quantity,
+          };
+        return acc;
+      }, {}),
     });
   } catch (error) {
     console.error("Error setting event doc:", error);

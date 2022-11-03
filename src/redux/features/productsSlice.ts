@@ -1,25 +1,36 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { DocumentData } from "firebase/firestore";
 import { getCollectionData } from "../../utils/firebase";
 
-type ProductsStateType = { events: any[]; merch: any[] };
+type ProductsStateType = {
+  events: DocumentData[] | null;
+  merch: DocumentData[] | null;
+};
 
 const initialState: ProductsStateType = {
-  events: [],
-  merch: [],
+  events: null,
+  merch: null,
 };
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const eventsPromise = getCollectionData("events");
-    const merchPromise = getCollectionData("merch");
-    const [events, merch] = await Promise.all([eventsPromise, merchPromise]);
+    try {
+      const eventsPromise = getCollectionData("events");
+      const merchPromise = getCollectionData("merch");
+      const [events, merch] = await Promise.all([eventsPromise, merchPromise]);
 
-    events.forEach((event) => {
-      event.date = new Date(event.date.seconds * 1000);
-    });
+      events.forEach((event: any) => {
+        event.date = new Date(event?.date?.seconds * 1000);
+      });
 
-    return { events, merch };
+      events.sort((a, b) => a.date - b.date);
+
+      return { events, merch };
+    } catch (err) {
+      console.error(err);
+      return { events: null, merch: null };
+    }
   }
 );
 
@@ -29,6 +40,7 @@ const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.fulfilled, (state, { payload }) => {
+      console.log({ payload });
       state.events = payload.events;
       state.merch = payload.merch;
     });

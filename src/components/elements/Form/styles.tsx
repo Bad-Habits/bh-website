@@ -18,6 +18,22 @@ export const FormElement = styled.form`
   width: 80%;
 `;
 
+export const AdditionalFormInputs = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 25px;
+
+  h2 {
+    margin-left: 30px;
+  }
+
+  button {
+    margin: 0;
+  }
+`;
+
 // FormInput
 const subColor = "grey";
 const mainColor = "red";

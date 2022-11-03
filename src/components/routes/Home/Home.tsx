@@ -17,14 +17,14 @@ const Home = () => {
       {user?.isAdmin && (
         <Button buttonProps={{ onClick: handleAdminClick }}>Admin</Button>
       )}
-      {/* <IntroVideo
+      <IntroVideo
         src={`https://www.youtube.com/embed/${INTRO_VIDEO_ID}`}
         onLoad={() =>
           console.log(
             "hide the video or replace it with something until it has loaded?"
           )
         }
-      /> */}
+      />
     </HomeContainer>
   );
 };

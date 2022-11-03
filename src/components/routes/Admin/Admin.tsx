@@ -12,14 +12,14 @@ const Admin = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!user?.isAdmin) navigate("../");
+    if (user !== undefined && !user?.isAdmin) navigate("../");
   }, [user, navigate]);
 
   const handleClick = (product: string) => {
     navigate(product);
   };
 
-  return (
+  return user ? (
     <AdminContainer>
       <ManageButtons>
         {products.map((product) => {
@@ -39,6 +39,8 @@ const Admin = () => {
 
       <Outlet />
     </AdminContainer>
+  ) : (
+    <h1>Loading</h1>
   );
 };
 

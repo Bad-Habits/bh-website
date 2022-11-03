@@ -10,10 +10,10 @@ import { getUser } from "../../utils/firebase";
 //   createdAt: Date;
 //   isAdmin: boolean;
 // };
-type UserType = DocumentData | null;
+type UserType = DocumentData | null | undefined;
 type UserStateType = { user: UserType };
 
-const initialState: UserStateType = { user: null };
+const initialState: UserStateType = { user: undefined };
 
 export const setUserThunk = createAsyncThunk(
   "auth/setUser",
